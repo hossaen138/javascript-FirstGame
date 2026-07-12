@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu</title>
+    <link
+      rel="stylesheet"
+      href="css/bootstrap.min.css"
+    />
+    <style>
+      .img1 {
+        height: 300px;
+        width: 270px;
+      }
+      body {
+        background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
+      }
+
+      #box1,
+      #box2,
+      #box3 {
+        transition: 0.4s;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+      }
+
+      #box1:hover,
+      #box2:hover,
+      #box3:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 25px 10px rgba(0, 0, 0, 0.8);
+        transform: scale(1.1);
+      }
+
+      #box1 img,
+      #box2 img,
+      #box3 img {
+        transition: 0.4s;
+      }
+
+      #box1:hover img {
+        transform: scale(1.01);
+      }
+
+      /* دکمه */
+      .btn-warning {
+        background: linear-gradient(45deg, #ffcc00, #ff8800);
+        border: none;
+      }
+
+      .btn-warning:hover {
+        background: linear-gradient(45deg, #ffaa00, #ff5500);
+      }
+    </style>
+  </head>
+  <body class="bg-secondary">
+    <div
+      class="container vh-100 d-flex align-items-center justify-content-center"
+    >
+      <div class="row">
+        <div class="col-12 bg-white text-center p-5 rounded shadow">
+          <div id="card1" class="row">
+            <div class="col-12">
+              <p class="h1 mb-3 placeholder-glow">
+                <span class="placeholder col-12">Select your Game</span>
+              </p>
+            </div>
+            <div class="row d-flex justify-content-between">
+              <div
+                class="col-lg-3 col-12 my-3 border border-dark border-4 p-3 bg-secondary rounded"
+                id="box1"
+              >
+                <p class="card-text placeholder-glow">
+                  <span class="placeholder col-12"></span>
+                  <span class="placeholder col-12"></span>
+                </p>
+                <div class="img-placeholder card-text placeholder-glow">
+                  <img
+                    class="img-fluid placeholder rounded mb-3"
+                    src="./pics/Screenshot 2026-06-12 150407.png"
+                    alt=""
+                  />
+                </div>
+                <a
+                  class="btn btn-warning w-100 disabled placeholder"
+                  aria-disabled="true"
+                  href="./Finalmemory.html"
+                ></a>
+              </div>
+              <div
+                class="col-lg-3 col-12 my-3 border border-dark border-4 p-3 bg-secondary rounded"
+                id="box2"
+              >
+                <p class="card-text placeholder-glow">
+                  <span class="placeholder col-12"></span>
+                  <span class="placeholder col-12"></span>
+                </p>
+                <div class="img-placeholder card-text placeholder-glow">
+                  <img
+                    class="img-fluid placeholder rounded mb-3"
+                    src="./pics/rps.png"
+                    alt=""
+                  />
+                </div>
+                <a
+                  class="btn btn-warning w-100 disabled placeholder"
+                  aria-disabled="true"
+                  href="./Finalmemory.html"
+                ></a>
+              </div>
+              <div
+                class="col-lg-3 col-12 my-3 border border-dark border-4 p-3 bg-secondary rounded"
+                id="box3"
+              >
+                <p class="card-text placeholder-glow">
+                  <span class="placeholder col-12"></span>
+                  <span class="placeholder col-12"></span>
+                </p>
+                <div class="img-placeholder card-text placeholder-glow">
+                  <img
+                    class="img-fluid placeholder rounded mb-3"
+                    src="./pics/p2.png"
+                    alt=""
+                  />
+                </div>
+                <a
+                  class="btn btn-warning mt-5 w-100 disabled placeholder"
+                  aria-disabled="true"
+                  href="./Finalmemory.html"
+                ></a>
+              </div>
+            </div>
+            <p class="h1 mt-5 placeholder-glow">
+              <span id="Data" class="placeholder col-12"
+                >Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Excepturi itaque dicta quod nobis! Voluptas deserunt cumque
+                consequatur sequi, quia ea, est
+              </span>
+            </p>
+            <p class="h1 placeholder-glow">
+              <span id="Data" class="placeholder col-12"
+                >Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Praesentium porro harum magnam molestias, in vero dignissimos
+                aliquam hic nobis quod voluptas
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/bootstrap.bundle.js"></script>
+    <script src="jquery-3.7.1.min.js"></script>
+    <script>
+      $(function () {
+        const box1 = $("#box1");
+        const card1 = $("#card1");
+        box1.click(function () {
+          getData();
+        });
+        //   box1.mouseenter(function () {
+        //     scale1(box1);
+        //   });
+        //   box1.mouseleave(function () {
+        //     scale2(box1);
+        //   });
+        //   function scale1(name) {
+        //     name.animate(name.css("transform", "scale(1.1)"));
+        //   }
+        //   function scale2(name) {
+        //     name.animate(name.css("transform", "scale(1)"));
+        //   }
+        async function getData() {
+          let response = await fetch("https://catfact.ninja/fact");
+          if (!response.ok) {
+            throw new Error("Some Thing Is Wrong ...");
+          }
+          let data = await response.json();
+          return data;
+        }
+        getData()
+          .then(async (ms) => {
+            let faText = await translateToFa(ms.fact);
+
+            card1.html("");
+            console.log(ms);
+            card1.html(`
+        <div class="col-12">
+          <p class="h1 mb-3">Select your Game</p>
+        </div>
+        <div class="row d-flex justify-content-between">
+            <div
+              class="col-lg-3 col-12 my-3 border border-warning border-4 p-3 bg-dark rounded"
+              id="box1"
+            >
+              <img
+                src="./pics/Screenshot 2026-06-12 150407.png"
+                class="img1 img-fluid rounded mb-3"
+                alt=""
+              />
+              <a class="btn btn-warning w-100 " href="./Finalmemory.html"
+                >Memory Game</a
+              >
+            </div>
+
+            <div
+              class="col-lg-3 col-12 my-3 border border-warning border-4 p-3 bg-dark rounded"
+              id="box1"
+            >
+              <img
+                src="./pics/rps.png"
+                class="img1 img-fluid rounded mb-3"
+                alt=""
+              />
+              <a class="btn btn-warning w-100 " href="./RPS.html"
+                >Rock Paper Scissors</a
+              >
+            </div>
+
+            <div
+                class="col-lg-3 col-12 my-3 border border-warning border-4 p-3 bg-dark rounded"
+                id="box1"
+                >
+                    <img  src="./pics/p3.png" class="img1 rounded img-fluid mb-3" alt="" />
+                    <a class="btn disabled btn-warning w-100" href="./Finalmemory.html"
+                    >Coming Soon ...</a
+                    >
+            </div>
+            </div>
+            <div class="fact text-start p-3 mt-5 col-12 bg-secondary rounded shadow">
+                <p class="h4">
+                   <span class="text-danger h2">Fun Fact About Cats : </span><br>
+                   ${ms.fact}
+                </p>
+            </div>
+            <div class="fact p-3 border-top text-end col-12 bg-secondary rounded shadow">
+                <p class="h4 text-light">
+                    <span class="text-danger h2">: فکت جالب درباره گربه ها</span><br>
+                    ${faText}
+                </p>
+            </div>
+            
+          `);
+          })
+          .catch((er) => {
+            card1.html("");
+            card1.html(`<p class="h1 my-5 text-danger">${er}</p>`);
+          });
+        async function translateToFa(text) {
+          let res = await fetch(
+            `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|fa`,
+          );
+          if (!res.ok) {
+            throw new Error("Some Thing Is Wrong ...");
+          }
+
+          let data = await res.json();
+          return data.responseData.translatedText;
+        }
+      });
+    </script>
+  </body>
+</html>
